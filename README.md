@@ -24,7 +24,7 @@ Here is my skill distribution for SC farming:
 
 ![Gemcraft FW skill distribution](https://i.imgur.com/e19DEZB.jpg)
 
-It's not optimal, but I don't really care much at this point.
+It's not optimal, but I don't really care much at this point. I also have pretty well fit Talisman, so it gives me 100k initial mana instead of 16k mentioned above.
 
 It relies on images to understand what happens. Different resolution or even graphical drivers may render the game slightly differently resulting in images not being fount on your side. In that case, either make your own screenshots and replace my images or implement delay-based logic. I just don't like relying on delays.
 
