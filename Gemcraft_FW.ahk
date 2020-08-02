@@ -1,4 +1,4 @@
-﻿#SingleInstance
+#SingleInstance
 
 F1::{
 	;This is the main test function
@@ -18,14 +18,14 @@ $F4::{
 }
 
 $F5::{
+	; This is to test/debug code snippets and functions separately.
 	; MsgBox(IsInteger(detector("FiledW4Inside.png"))?"Nope!":"Found!")
-	targetingChange(382, 339, 5)
+	; targetingChange(382, 339, 5)
 }
 
 main(i := 0, position := false){
 	WMActions("W4")
-	Sleep(1000)
-	ClearW4()
+	clearW4()
 	Click 11,11,0
 	MouseMove(11, 11, 1500)
 	Sleep(4000)
@@ -39,14 +39,13 @@ WMActions(field := "W4"){
 		; This function is for Activity on World Map
 	if(!IsInteger(W4Coords)) {
 		; MsgBox "All is good! X is " . W4Coords[1] . " and Y is " . W4Coords[2]
-		MouseMove W4Coords[1]-150, W4Coords[2]+110, 300
+		MouseMove W4Coords[1]-150, W4Coords[2]+110, 90
 		Sleep(520)
-		Click W4Coords[1]-150, W4Coords[2]+110, 3
+		Click W4Coords[1]-150, W4Coords[2]+110, 1
 		Sleep(520)
-		Click
-		Sleep(520)
-		Click
-		waitUntilLoaded("FieldW4Traits.png",300)
+		waitUntilLoaded("FieldW4Traits.png",300, true)
+		Loop 4
+			Click("WheelDown") ; uh, don't even ask why I'm doing this
 		;MsgBox "Traits Loaded!"
 		Click 519, 202, 2 ; Journey
 		Sleep(200)
@@ -58,31 +57,31 @@ WMActions(field := "W4"){
 		MsgBox "Field " . field . " hasn't been found :("
 }
 
-ClearW4(){
+clearW4(){
 	; This clears W4 on 1920*1080 fullscreen
 	
-	x := 382
-	y := 339
+	x := 1086 
+	y := 319 
 	Click 670, 537, 0 ; Sell useless inventory gems
-	PressKey("x", 1, 25)
+	pressKey("x", 1, 25)
 	Click 1763, 484, 0
-	PressKey("x", 1, 25)
+	pressKey("x", 1, 25)
 	Click 1827, 491, 0
-	PressKey("x", 1, 25)
-	PressKey("Numpad4") ; Get gems in tower
-	PressKey("t")
+	pressKey("x", 1, 25)
+	pressKey("Numpad4") ; Get gems in tower
+	pressKey("t")
 	Click x, y, 1
 	Click "right", 1
 	Sleep(250)
 	click 1768, 484, 0 ; upgrading, duplicating the gem
-	PressKey("u", 2)
-	PressKey("d", 8)
-	PressKey("u", 3)
+	pressKey("u", 4)
+	pressKey("d", 8)
+	pressKey("u", 4)
 	Click x, y, 1
-	PressKey("a") ; building amps
-	EightClicksAround(322, 281)
+	pressKey("a") ; building amps
+	eightClicksAround(x-60, y-60)
 	Click "right", 1 ; populating amps
-	EightClicksAround(322, 281)
+	eightClicksAround(x-60, y-60)
 	targetingChange(x, y, 5) ;changing the main gem's targeting
 	Sleep 350
 	Send "{Ctrl down}" ; Send all waves
@@ -90,12 +89,22 @@ ClearW4(){
 	Sleep 70
 	Send "{Ctrl up}"
 	Sleep 70
-	PressKey("q", 2)
+	pressKey("q", 2)
+	Click 857, 548, 0 ; Move cursor to the center to decrease lags
+	;Building additional tower to fight the guardians or whatever they're called...
+	pressKey("t")
+	Click 246, 485, 1
+	Click x-60, y-60, 1
+	pressKey("d")
+	Click 246, 485, 1
+	targetingChange(246, 485, 5)
+	pressKey("u", 3)
+	pressKey("5")
 	Click 857, 548, 0 ; Move cursor to the center to decrease lags
 	Sleep 10000
 	Click x, y, 0 ; upgrade the killgem
-	PressKey("u", 3)
-	PressKey("5", 2)
+	pressKey("u", 3)
+	pressKey("5", 2)
 	Click 857, 548, 0 ; Move cursor to the center to decrease lags
 	waitUntilLoaded("BattleEnd.png",1000)
 	Sleep(500)
@@ -110,7 +119,7 @@ targetingChange(x, y, n := 5){
 	}
 }
 
-EightClicksAround(x,y){
+eightClicksAround(x,y){
 	offset := 60
 	Click x,y,1 
 	Sleep(150)
@@ -145,7 +154,6 @@ detector(path){
 	; This function detects images on screen.
 	ErrorLvl := ImageSearch(FoundX, FoundY, 0, 0, 1920, 1080, A_ScriptDir . "/images/GC/" . path)
 	if(ErrorLvl = 1) {
-		
 		;MsgBox path." was found at " . FoundX . "x" . FoundY
 		return [FoundX, FoundY]
 	}
@@ -155,7 +163,7 @@ detector(path){
 	}
 }
 
-PressKey(charkey, count := 1, ms := 30)
+pressKey(charkey, count := 1, ms := 30)
 {
     Loop count
     {
@@ -165,10 +173,18 @@ PressKey(charkey, count := 1, ms := 30)
         Sleep(ms)
     }
 }
-waitUntilLoaded(image, timeInterval){
+
+waitUntilLoaded(image, timeInterval := 100, click := false){
+	i:=0
 	Loop {
+		i++
 		Sleep(timeInterval)
 		if(detector(image) != 0)
 			return
+		if (click){
+			Click()
+			if (i>2)
+				return ; sometimes clicks don't work on WM, so I give it a few more tries and proceed, assuming it's cool now.
+		}
 	}
 }
