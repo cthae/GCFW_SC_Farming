@@ -20,10 +20,11 @@ This is my first attempt to use AHK v2. To anyone who still uses v1, please stop
 
 I use this automation on lvl 500 with about 30k starting mana and maxed out Seeker Sense, on 1980x1020 fullscreen. But This particular code requires around 100k starting mana and wizard level ~1000. Feel free to rewrite the code to be more fitting to your WL. I think it can be used starting from around WL 350.
 
-Here is my skill distribution:
+Here is my skill distribution for SC farming:
 
 ![Gemcraft FW skill distribution](https://i.imgur.com/e19DEZB.jpg)
 
+It's not optimal, but I don't really care much at this point.
 
 It relies on images to understand what happens. Different resolution or even graphical drivers may render the game slightly differently resulting in images not being fount on your side. In that case, either make your own screenshots and replace my images or implement delay-based logic. I just don't like relying on delays.
 
