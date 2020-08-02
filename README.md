@@ -22,7 +22,7 @@ I use this automation on lvl 500 with about 30k starting mana and maxed out Seek
 
 Here is my skill distribution:
 
-(https://i.imgur.com/e19DEZB.jpg)
+![Gemcraft FW skill distribution](https://i.imgur.com/e19DEZB.jpg)
 
 
 It relies on images to understand what happens. Different resolution or even graphical drivers may render the game slightly differently resulting in images not being fount on your side. In that case, either make your own screenshots and replace my images or implement delay-based logic. I just don't like relying on delays.
